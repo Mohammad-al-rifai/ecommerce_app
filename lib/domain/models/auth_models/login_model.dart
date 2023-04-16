@@ -45,45 +45,22 @@ class LoginData {
 
 class LoginUser {
   String? sId;
-  String? name;
-  String? email;
-  String? location;
-  String? phone;
-  bool? blocked;
+  String? password;
   int? role;
-  bool? activited;
 
-  LoginUser(
-      {this.sId,
-      this.name,
-      this.email,
-      this.location,
-      this.phone,
-      this.blocked,
-      this.role,
-      this.activited});
+  LoginUser({this.sId, this.password, this.role});
 
   LoginUser.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    name = json['name'];
-    email = json['email'];
-    location = json['location'];
-    phone = json['phone'];
-    blocked = json['blocked'];
+    password = json['password'];
     role = json['role'];
-    activited = json['activited'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['name'] = name;
-    data['email'] = email;
-    data['location'] = location;
-    data['phone'] = phone;
-    data['blocked'] = blocked;
+    data['password'] = password;
     data['role'] = role;
-    data['activited'] = activited;
     return data;
   }
 }

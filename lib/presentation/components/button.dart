@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/styles_manager.dart';
@@ -36,20 +37,27 @@ class DefaultButton extends StatelessWidget {
         color: background,
         borderRadius: BorderRadius.circular(radius!),
       ),
-      child: MaterialButton(
-        onPressed: () => function(),
-        child: !isLoading
-            ? Text(
-                isUpperCase! ? text.toUpperCase() : text,
-                style: getRegularStyle(
-                  color: ColorManager.white,
-                  fontSize: AppPadding.p18,
-                ),
-              )
-            : DefaultLoading(
-                xT: 0.0,
-                yT: -30.0,
+      child: Conditional.single(
+        context: context,
+        conditionBuilder: (BuildContext context) => !isLoading,
+        widgetBuilder: (BuildContext context) {
+          return MaterialButton(
+            onPressed: () => function(),
+            child: Text(
+              isUpperCase! ? text.toUpperCase() : text,
+              style: getRegularStyle(
+                color: ColorManager.white,
+                fontSize: AppPadding.p18,
               ),
+            ),
+          );
+        },
+        fallbackBuilder: (BuildContext context) {
+          return DefaultLoading(
+            xT: 0.0,
+            yT: -40.0,
+          );
+        },
       ),
     );
   }

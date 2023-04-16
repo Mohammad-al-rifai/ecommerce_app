@@ -22,11 +22,12 @@ class LoginCubit extends Cubit<LoginStates> {
     DioHelper.postData(
       url: Urls.login,
       data: {
-        'email': email,
+        'nameOrEmail': email,
         'password': password,
       },
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
+      print('Login Done Success');
       emit(LoginDoneState(loginModel: loginModel));
     }).catchError((error) {
       print(error.toString());

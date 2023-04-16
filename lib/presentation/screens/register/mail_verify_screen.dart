@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/app/functions.dart';
 import 'package:ecommerce/presentation/components/button.dart';
 import 'package:ecommerce/presentation/components/text_form_field.dart';
+import 'package:ecommerce/presentation/resources/string_manager.dart';
 import 'package:ecommerce/presentation/resources/styles_manager.dart';
 import 'package:ecommerce/presentation/screens/home/home_screen.dart';
 import 'package:ecommerce/presentation/screens/register/register_cubit/register_cubit.dart';
@@ -33,8 +35,8 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Mail Verification',
+        title: Text(
+          AppStrings.mailVerification.tr(),
         ),
       ),
       body: BlocConsumer<RegisterCubit, RegisterStates>(
@@ -69,7 +71,7 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
                   child: Column(
                     children: [
                       Text(
-                        'You Are Send Email Code Verification To:',
+                        AppStrings.emailVerificationCodeIsSentTo.tr(),
                         style: getBoldStyle(
                           color: ColorManager.primary,
                         ),
@@ -87,7 +89,7 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
                         height: AppSize.s4,
                       ),
                       Text(
-                        'Please Check your Mail Box',
+                        AppStrings.pleaseCheckMailBox.tr(),
                         style: getExtraLightStyle(
                           color: ColorManager.primary,
                         ),
@@ -97,7 +99,7 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
                       ),
                       TFF(
                         controller: codeController,
-                        label: 'Email Code Verification Here',
+                        label: AppStrings.typeCodeHere.tr(),
                         prefixIcon: Icons.verified_user_sharp,
                         keyboardType: TextInputType.number,
                         validator: (String value) {
@@ -111,23 +113,15 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
                       ),
                       DefaultButton(
                         function: () {
-                          // print(
-                          //     'cubit.mailVerificationModel?.pin: ${cubit.mailVerificationModel?.pin}');
-                          // if (formKey.currentState!.validate()) {
-                          //   if (cubit.mailVerificationModel?.pin ==
-                          //       codeController.text) {
-                          //     cubit.register(
-                          //       registerRequest: widget.registerRequest,
-                          //     );
-                          //   } else {
-                          //     showToast(
-                          //         text: 'Not Valid', state: ToastStates.ERROR);
-                          //   }
-                          // }
-
-                          navigateAndFinish(context, const HomeLayout());
+                          if (formKey.currentState!.validate()) {
+                            widget.registerRequest.pin = codeController.text;
+                            cubit.register(
+                              registerRequest: widget.registerRequest,
+                            );
+                          }
+                          // navigateAndFinish(context, const HomeLayout());
                         },
-                        text: 'Register Now',
+                        text: AppStrings.registerNow.tr(),
                         isLoading: state is RegisterLoadingState,
                       ),
                     ],

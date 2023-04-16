@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:ecommerce/config/urls.dart';
+import 'package:ecommerce/domain/models/auth_models/forget_password_model.dart';
+import 'package:ecommerce/domain/requests/forget_password_request.dart';
 import 'package:ecommerce/domain/requests/register_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../data/network/remote/dio_helper.dart';
-import '../../../../domain/models/auth_models/mail_verifaication_model.dart';
 import '../../../../domain/models/auth_models/register_model.dart';
 
 part 'register_state.dart';
@@ -36,8 +38,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
   }
 
   // =================================================
-  MailVerificationModel? mailVerificationModel;
-
   sendCode2mail({
     required String email,
   }) {
@@ -46,11 +46,31 @@ class RegisterCubit extends Cubit<RegisterStates> {
       url: Urls.mailVerify,
       data: {"email": email},
     ).then((value) {
-      mailVerificationModel = MailVerificationModel.fromJson(value.data);
-      emit(MailVerificationDoneState(
-          mailVerificationModel: mailVerificationModel));
+      if (value.data['status']) {
+        emit(MailVerificationDoneState());
+      }
     }).catchError((error) {
+      print(error.toString());
       emit(MailVerificationErrorState());
+    });
+  }
+
+  // ====================== Forget Password ========================
+
+  forgetPassword({
+    required ForgetPasswordRequest forgetPasswordRequest,
+  }) {
+    emit(ForgetPasswordLoadingState());
+
+    DioHelper.putData(
+      url: Urls.forgetPassword,
+      data: forgetPasswordRequest.toJson(),
+    ).then((value) {
+      if (value.data['status'] == 'success') {
+        emit(ForgetPasswordDoneState());
+      }
+    }).catchError((err) {
+      emit(ForgetPasswordErrorState(err: err));
     });
   }
 }

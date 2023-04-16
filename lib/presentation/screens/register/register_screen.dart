@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/domain/requests/register_request.dart';
 import 'package:ecommerce/presentation/screens/login/login_screen.dart';
 import 'package:ecommerce/presentation/screens/register/mail_verify_screen.dart';
@@ -7,10 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/functions.dart';
 import '../../components/button.dart';
+import '../../components/my_divider.dart';
 import '../../components/text_button.dart';
 import '../../components/text_form_field.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
+import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 
@@ -22,20 +25,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController fNameController = TextEditingController();
+  TextEditingController lNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   RegisterRequest registerRequest = RegisterRequest(
-    name: '',
+    firstName: '',
+    lastName: '',
     password: '',
     email: '',
-    phone: '',
-    location: '',
     address: 'sahgdhsavdhass#4svdh43#',
+    pin: '',
   );
 
   var formKey = GlobalKey<FormState>();
@@ -49,9 +51,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Register',
+          AppStrings.register.tr(),
           style:
-              getBlackStyle(color: ColorManager.white, fontSize: AppSize.s18),
+              getBlackStyle(color: ColorManager.primary, fontSize: AppSize.s18),
         ),
       ),
       body: BlocConsumer<RegisterCubit, RegisterStates>(
@@ -79,8 +81,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: AppSize.s18,
                       ),
                       TFF(
-                        controller: nameController,
-                        label: 'Name',
+                        controller: fNameController,
+                        label: AppStrings.fName.tr(),
                         prefixIcon: Icons.person,
                         validator: (String value) {
                           if (value.isEmpty) {
@@ -92,8 +94,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: AppSize.s18,
                       ),
                       TFF(
+                        controller: lNameController,
+                        label: AppStrings.lName.tr(),
+                        prefixIcon: Icons.person,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'last Name Must not be empty';
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        height: AppSize.s18,
+                      ),
+                      TFF(
                         controller: emailController,
-                        label: 'Email',
+                        label: AppStrings.email.tr(),
                         keyboardType: TextInputType.emailAddress,
                         prefixIcon: Icons.email_outlined,
                         validator: (String value) {
@@ -108,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TFF(
                         controller: passwordController,
                         isPassword: isPassword,
-                        label: 'Password',
+                        label: AppStrings.password.tr(),
                         prefixIcon: Icons.lock,
                         suffix: isPassword
                             ? Icons.visibility
@@ -127,52 +142,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(
                         height: AppSize.s18,
                       ),
-                      TFF(
-                        controller: phoneController,
-                        keyboardType: TextInputType.phone,
-                        label: 'Phone',
-                        prefixIcon: Icons.call,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return 'Phone Must not be empty';
-                          }
-                        },
-                      ),
-                      const SizedBox(
-                        height: AppSize.s18,
-                      ),
-                      TFF(
-                        controller: locationController,
-                        label: 'Location',
-                        prefixIcon: Icons.location_on,
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return 'Location Must not be empty';
-                          }
-                        },
-                      ),
-                      const SizedBox(
-                        height: AppSize.s18,
-                      ),
                       DefaultButton(
                         function: () {
-                          // if (formKey.currentState!.validate()) {
-                          //   registerRequest.name = nameController.text;
-                          //   registerRequest.email = emailController.text;
-                          //   registerRequest.password = passwordController.text;
-                          //   registerRequest.phone = phoneController.text;
-                          //   registerRequest.location = locationController.text;
-                          //   RegisterCubit.get(context).sendCode2mail(
-                          //     email: emailController.text,
-                          //   );
-                          navigateTo(
-                              context,
-                              MailVerifyScreen(
-                                registerRequest: registerRequest,
-                              ));
-                          // }
+                          if (formKey.currentState!.validate()) {
+                            registerRequest.firstName = fNameController.text;
+                            registerRequest.lastName = lNameController.text;
+                            registerRequest.email = emailController.text;
+                            registerRequest.password = passwordController.text;
+                            RegisterCubit.get(context).sendCode2mail(
+                              email: emailController.text,
+                            );
+                            navigateTo(
+                                context,
+                                MailVerifyScreen(
+                                  registerRequest: registerRequest,
+                                ));
+                          }
                         },
-                        text: 'Register',
+                        text: AppStrings.register.tr(),
                         isLoading: state is MailVerificationLoadingState,
                         isUpperCase: true,
                       ),
@@ -182,16 +169,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          MyDivider(width: getScreenWidth(context) / 3),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppPadding.p8,
+                            ),
+                            child: Text(
+                              AppStrings.or.tr(),
+                              style: getBoldStyle(color: ColorManager.primary),
+                            ),
+                          ),
+                          MyDivider(width: getScreenWidth(context) / 3),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Text(
-                            'Have Account? ',
+                            AppStrings.haveAccount.tr(),
                             style: getRegularStyle(
                               color: ColorManager.primary,
                             ),
                           ),
                           DTextButton(
-                            text: 'login',
+                            text: AppStrings.login.tr(),
                             function: () {
-                              print('Login Now===');
                               navigateAndFinish(context, const LoginScreen());
                             },
                           ),

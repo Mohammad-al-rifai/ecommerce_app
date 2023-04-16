@@ -1,37 +1,37 @@
 class RegisterRequest {
-  late String name;
+  late String firstName;
+  late String lastName;
   late String password;
   late String email;
-  late String phone;
-  late String location;
   late String address;
+  late String pin;
 
   RegisterRequest({
-    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.password,
     required this.email,
-    required this.phone,
-    required this.location,
     required this.address,
+    required this.pin,
   });
 
   RegisterRequest.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
     password = json['password'];
     email = json['email'];
-    phone = json['phone'];
-    location = json['location'];
     address = json['address'];
+    pin = json['pin'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
     data['password'] = password;
     data['email'] = email;
-    data['phone'] = phone;
-    data['location'] = location;
     data['address'] = address;
+    data['pin'] = pin;
     return data;
   }
 }

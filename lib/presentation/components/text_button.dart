@@ -9,10 +9,11 @@ class DTextButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.function,
+    this.isUpperCase = false,
   }) : super(key: key);
 
   Function function;
-
+  bool isUpperCase;
   String text;
 
   @override
@@ -20,7 +21,7 @@ class DTextButton extends StatelessWidget {
     return TextButton(
       onPressed: () => function(),
       child: Text(
-        text.toUpperCase(),
+        isUpperCase ? text.toUpperCase() : text,
         style: getMediumStyle(color: ColorManager.primary),
       ),
     );

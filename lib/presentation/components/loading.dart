@@ -24,7 +24,7 @@ class DefaultLoading extends StatelessWidget {
       child: Lottie.asset(
         JsonAssets.loading,
         fit: BoxFit.fitWidth,
-        width: 100.0,
+        width: 50.0,
       ),
     );
   }

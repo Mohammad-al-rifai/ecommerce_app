@@ -1,14 +1,18 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/app/functions.dart';
 import 'package:ecommerce/data/network/local/cache_helper.dart';
 import 'package:ecommerce/presentation/components/button.dart';
+import 'package:ecommerce/presentation/components/my_divider.dart';
 import 'package:ecommerce/presentation/components/text_form_field.dart';
 import 'package:ecommerce/presentation/components/toast_notifications.dart';
 import 'package:ecommerce/presentation/resources/color_manager.dart';
 import 'package:ecommerce/presentation/resources/constants_manager.dart';
+import 'package:ecommerce/presentation/resources/string_manager.dart';
 import 'package:ecommerce/presentation/resources/styles_manager.dart';
 import 'package:ecommerce/presentation/screens/home/home_screen.dart';
+import 'package:ecommerce/presentation/screens/register/forget_password_screen.dart';
 import 'package:ecommerce/presentation/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login',
+          AppStrings.login.tr(),
           style:
-              getBlackStyle(color: ColorManager.white, fontSize: AppSize.s18),
+              getBlackStyle(color: ColorManager.primary, fontSize: AppSize.s18),
         ),
       ),
       body: BlocProvider(
@@ -83,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         TFF(
                           controller: emailController,
-                          label: 'Email',
+                          label: AppStrings.emailOrUsername.tr(),
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: Icons.email_outlined,
                           validator: (String value) {
@@ -98,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TFF(
                           controller: passwordController,
                           isPassword: isPassword,
-                          label: 'Password',
+                          label: AppStrings.password.tr(),
                           prefixIcon: Icons.lock,
                           suffix: isPassword
                               ? Icons.visibility
@@ -127,26 +131,45 @@ class _LoginScreenState extends State<LoginScreen> {
                             // }
                             navigateAndFinish(context, const HomeLayout());
                           },
-                          text: 'login',
+                          text: AppStrings.login.tr(),
                           isLoading: state is LoginLoadingState,
                           isUpperCase: true,
                         ),
-                        const SizedBox(
-                          height: AppSize.s18,
+                        DTextButton(
+                          text: AppStrings.forgetPassword.tr(),
+                          function: () {
+                            navigateTo(context, const ForgetPasswordScreen());
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            MyDivider(width: getScreenWidth(context) / 3),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppPadding.p8,
+                              ),
+                              child: Text(
+                                AppStrings.or.tr(),
+                                style:
+                                    getBoldStyle(color: ColorManager.primary),
+                              ),
+                            ),
+                            MyDivider(width: getScreenWidth(context) / 3),
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Don\'t Have Account? ',
+                              AppStrings.doNotHaveAccount.tr(),
                               style: getRegularStyle(
                                 color: ColorManager.primary,
                               ),
                             ),
                             DTextButton(
-                              text: 'Register',
+                              text: AppStrings.register.tr(),
                               function: () {
-                                print('Register Now===');
                                 navigateAndFinish(
                                     context, const RegisterScreen());
                               },

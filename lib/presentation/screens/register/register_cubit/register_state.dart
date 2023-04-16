@@ -19,10 +19,18 @@ class RegisterErrorState extends RegisterStates {}
 
 class MailVerificationLoadingState extends RegisterStates {}
 
-class MailVerificationDoneState extends RegisterStates {
-  final MailVerificationModel? mailVerificationModel;
-
-  MailVerificationDoneState({this.mailVerificationModel});
-}
+class MailVerificationDoneState extends RegisterStates {}
 
 class MailVerificationErrorState extends RegisterStates {}
+
+// Forget password States
+
+class ForgetPasswordLoadingState extends RegisterStates {}
+
+class ForgetPasswordDoneState extends RegisterStates {}
+
+class ForgetPasswordErrorState extends RegisterStates {
+  final String? err;
+
+  ForgetPasswordErrorState({this.err});
+}

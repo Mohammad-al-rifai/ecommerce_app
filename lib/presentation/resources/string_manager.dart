@@ -1,38 +1,33 @@
 class AppStrings {
-  static const noRouteFound = "No Route Found";
+  static const String login = "login";
+  static const String register = "register";
+  static const String registerNow = "register_now";
+  static const String home = "home";
+  static const String categories = "categories";
+  static const String cart = "cart";
+  static const String profile = "profile";
+  static const String search = "search";
+  static const String email = "email";
+  static const String emailOrUsername = "email_or_username";
+  static const String password = "password";
+  static const String doNotHaveAccount = "don't_have_account?";
+  static const String haveAccount = "have_account?";
+  static const String fName = "f_name";
+  static const String lName = "l_name";
+  static const String phone = "phone";
+  static const String location = "location";
 
-  static const onBoardingTitle1 = "SEE THE BEST COURSE #1";
-  static const onBoardingTitle2 = "SEE THE BEST COURSE #2";
-  static const onBoardingTitle3 = "SEE THE BEST COURSE #3";
-  static const onBoardingTitle4 = "SEE THE BEST COURSE #4";
-
-  static const onBoardingSubTitle1 =
-      "Tut app is an awesome flutter application using clean architecture #1";
-  static const onBoardingSubTitle2 =
-      "Tut app is an awesome flutter application using clean architecture #2";
-  static const onBoardingSubTitle3 =
-      "Tut app is an awesome flutter application using clean architecture #3";
-  static const onBoardingSubTitle4 =
-      "Tut app is an awesome flutter application using clean architecture #4";
-  static const skip = "skip";
-
-  static const username = "Username";
-  static const password = "Password";
-  static const usernameError = "Please enter your userName";
-  static const passwordError = "Please enter your password";
-  static const login = "Login";
-  static const forgetPassword = "Forget password";
-  static const registerText = "Not a member ? Sign up";
-  static const loading = "Loading...";
-  static const retryAgain = "Retry again";
-  static const ok = "Ok";
-  static const String emailHint = 'Email';
-  static const String invalidEmail = "Email format is wrong";
-  static const String resetPassword = "Reset Password";
-  static const String success = "Success";
-  static const String userNameInvalid = "User name should be at least 8 chars";
-
-  static const String mobileNumberInvalid =
-      "Mobile should be at least 10 digits";
-  static const String passwordInvalid = "Password should be at least 6 chars";
+  // mail verify Screen:
+  static const String mailVerification = "mail_verification";
+  static const String pleaseCheckMailBox = "please_check_mail_box";
+  static const String emailVerificationCodeIsSentTo =
+      "email_verification_code_is_sent_to";
+  static const String typeCodeHere = "type_code_here";
+  static const String forgetPassword = "forget_password";
+  static const String or = "or";
+  static const String enterYourEmailAddress = "enter_your_email_address";
+  static const String send = "send";
+  static const String newPassword = "new_password";
+  static const String yourPasswordHasBeenChangedSuccess =
+      "your_password_has_been_changed_success";
 }
