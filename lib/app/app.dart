@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context) => RegisterCubit()),
-        BlocProvider(create: (BuildContext context) => HomeLayoutCubit()),
+        BlocProvider(create: (BuildContext context) => HomeLayoutCubit()..getBanners()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

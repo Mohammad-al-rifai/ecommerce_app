@@ -13,3 +13,14 @@ class GetProfileLoadingState extends HomeLayoutStates {}
 class GetProfileDoneState extends HomeLayoutStates {}
 
 class GetProfileErrorState extends HomeLayoutStates {}
+
+// Get Banners
+class GetBannersLoadingState extends HomeLayoutStates {}
+
+class GetBannersDoneState extends HomeLayoutStates {
+  final List<BannerItem> banners;
+
+  GetBannersDoneState({required this.banners});
+}
+
+class GetBannersErrorState extends HomeLayoutStates {}

@@ -3,6 +3,7 @@ const String jsonPath = "assets/json";
 
 class ImageAssets {
   static const String splashLogo = "$imagePath/splash_logo.png";
+  static const String noImage = "$imagePath/no_image.jpg";
 }
 
 class JsonAssets {
