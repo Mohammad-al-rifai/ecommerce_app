@@ -30,24 +30,18 @@ class DefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: 40.0,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(radius!),
-      ),
+    return Center(
       child: Conditional.single(
         context: context,
         conditionBuilder: (BuildContext context) => !isLoading,
         widgetBuilder: (BuildContext context) {
-          return MaterialButton(
+          return ElevatedButton(
             onPressed: () => function(),
             child: Text(
               isUpperCase! ? text.toUpperCase() : text,
               style: getRegularStyle(
                 color: ColorManager.white,
-                fontSize: AppPadding.p18,
+                fontSize: AppSize.s16,
               ),
             ),
           );
@@ -55,7 +49,7 @@ class DefaultButton extends StatelessWidget {
         fallbackBuilder: (BuildContext context) {
           return DefaultLoading(
             xT: 0.0,
-            yT: -40.0,
+            yT: 0.0,
           );
         },
       ),

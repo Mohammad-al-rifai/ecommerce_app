@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../data/network/remote/dio_helper.dart';
+import '../../../layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
 
 part 'login_state.dart';
 
@@ -27,7 +28,6 @@ class LoginCubit extends Cubit<LoginStates> {
       },
     ).then((value) {
       loginModel = LoginModel.fromJson(value.data);
-      print('Login Done Success');
       emit(LoginDoneState(loginModel: loginModel));
     }).catchError((error) {
       print(error.toString());

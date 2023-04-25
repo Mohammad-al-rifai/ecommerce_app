@@ -28,7 +28,14 @@ class _HomeLayoutState extends State<HomeLayout> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) {
-              cubit.changeBottom(index);
+              cubit.changeBottom(
+                index,
+                function: (index) {
+                  if (index == 0) {
+                    cubit.getBanners();
+                  }
+                },
+              );
             },
             items: [
               BottomNavigationBarItem(

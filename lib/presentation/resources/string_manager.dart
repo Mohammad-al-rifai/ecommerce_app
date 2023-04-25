@@ -30,4 +30,16 @@ class AppStrings {
   static const String newPassword = "new_password";
   static const String yourPasswordHasBeenChangedSuccess =
       "your_password_has_been_changed_success";
+  static const String arabic = "arabic";
+  static const String english = "english";
+  static const String appLanguage = "application_language";
+  static const String loginNow2YourAccount = "login_now_2_your_account";
+  static const String logout = "logout";
+  static const String confirmationLogout = "confirmation_logout";
+  static const String areYouSureYouWantToLogout =
+      "are_you_sure_you_want_to_logout";
+  static const String yes = "yes";
+  static const String no = "no";
+  static const String somethingsErrorPleaseCheckYourInternet =
+      "somethings_error_please_check_your_internet";
 }

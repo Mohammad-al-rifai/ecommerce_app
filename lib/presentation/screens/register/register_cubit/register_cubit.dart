@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce/config/urls.dart';
-import 'package:ecommerce/domain/models/auth_models/forget_password_model.dart';
 import 'package:ecommerce/domain/requests/forget_password_request.dart';
 import 'package:ecommerce/domain/requests/register_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +26,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
       url: Urls.register,
       data: registerRequest.toJson(),
     ).then((value) {
-      if (value.data['status'] == 'success') {
+      if (value.data['status']) {
         registerModel = RegisterModel.fromJson(value.data);
-        print('Register Token Is : ${registerModel?.data?.token}');
         emit(RegisterDoneState(registerModel: registerModel));
       }
     }).catchError((error) {
@@ -66,7 +64,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
       url: Urls.forgetPassword,
       data: forgetPasswordRequest.toJson(),
     ).then((value) {
-      if (value.data['status'] == 'success') {
+      if (value.data['status']) {
         emit(ForgetPasswordDoneState());
       }
     }).catchError((err) {

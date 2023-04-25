@@ -25,5 +25,15 @@
   "enter_your_email_address": "أدخل عنوان بريدك الإلكتروني",
   "send": "إرسال",
   "new_password": "كلمة المرور الجديدة",
-  "your_password_has_been_changed_success": "تم تغيير كلمة المرور بنجاح"
+  "your_password_has_been_changed_success": "تم تغيير كلمة المرور بنجاح",
+  "arabic": "العربية",
+  "english": "الإنكليزية",
+  "application_language": "لغة التطبيق: ",
+  "login_now_2_your_account": "سجل دخول الآن إلى حسابك",
+  "logout": "تسجيل الخروج",
+  "confirmation_logout": "تأكيد تسجيل الخروج",
+  "are_you_sure_you_want_to_logout": "هل أنت متأكد من تسجيل الخروج؟",
+  "yes": "نعم",
+  "no": "لا",
+  "somethings_error_please_check_your_internet": "حدث خطأ ما, برجاء التحقق من إتصالك بالإنترنت."
 }

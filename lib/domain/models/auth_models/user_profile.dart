@@ -1,14 +1,14 @@
-class RegisterModel {
+class UserProfileModel {
   String? message;
   bool? status;
-  RegisterData? data;
+  UserProfileData? data;
 
-  RegisterModel({this.message, this.status, this.data});
+  UserProfileModel({this.message, this.status, this.data});
 
-  RegisterModel.fromJson(Map<String, dynamic> json) {
+  UserProfileModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
-    data = json['data'] != null ? RegisterData.fromJson(json['data']) : null;
+    data = json['data'] != null ? UserProfileData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,15 +22,13 @@ class RegisterModel {
   }
 }
 
-class RegisterData {
-  RegisterUser? user;
-  String? token;
+class UserProfileData {
+  UserInfo? user;
 
-  RegisterData({this.user, this.token});
+  UserProfileData({this.user});
 
-  RegisterData.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? RegisterUser.fromJson(json['user']) : null;
-    token = json['token'];
+  UserProfileData.fromJson(Map<String, dynamic> json) {
+    user = json['user'] != null ? UserInfo.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -38,12 +36,11 @@ class RegisterData {
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    data['token'] = token;
     return data;
   }
 }
 
-class RegisterUser {
+class UserInfo {
   String? sId;
   String? fullName;
   String? email;
@@ -53,7 +50,7 @@ class RegisterUser {
   String? createdAt;
   int? iV;
 
-  RegisterUser(
+  UserInfo(
       {this.sId,
       this.fullName,
       this.email,
@@ -63,7 +60,7 @@ class RegisterUser {
       this.createdAt,
       this.iV});
 
-  RegisterUser.fromJson(Map<String, dynamic> json) {
+  UserInfo.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     fullName = json['fullName'];
     email = json['email'];

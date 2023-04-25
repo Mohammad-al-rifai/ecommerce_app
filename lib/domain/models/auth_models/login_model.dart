@@ -1,6 +1,6 @@
 class LoginModel {
   String? message;
-  String? status;
+  bool? status;
   LoginData? data;
 
   LoginModel({this.message, this.status, this.data});
@@ -45,21 +45,24 @@ class LoginData {
 
 class LoginUser {
   String? sId;
-  String? password;
+  String? fullName;
+  String? email;
   int? role;
 
-  LoginUser({this.sId, this.password, this.role});
+  LoginUser({this.sId, this.fullName, this.email, this.role});
 
   LoginUser.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    password = json['password'];
+    fullName = json['fullName'];
+    email = json['email'];
     role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['password'] = password;
+    data['fullName'] = fullName;
+    data['email'] = email;
     data['role'] = role;
     return data;
   }

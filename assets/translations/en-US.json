@@ -25,5 +25,15 @@
   "enter_your_email_address": "Enter your email address",
   "send": "Send",
   "new_password": "New Password",
-  "your_password_has_been_changed_success": "Your password has been changed success"
+  "your_password_has_been_changed_success": "Your password has been changed success",
+  "arabic": "Arabic",
+  "english": "English",
+  "application_language": "Application Language: ",
+  "login_now_2_your_account": "Login now to your account",
+  "logout": "Logout",
+  "confirmation_logout": "Confirmation Logout",
+  "are_you_sure_you_want_to_logout": "Are You Sure You Want To Logout?",
+  "yes": "Yes",
+  "no": "No",
+  "somethings_error_please_check_your_internet": "Somethings Error Please Check Your Internet."
 }

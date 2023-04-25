@@ -4,6 +4,7 @@ import 'package:ecommerce/domain/models/home_models/banner_model.dart';
 import 'package:ecommerce/presentation/components/loading.dart';
 import 'package:ecommerce/presentation/components/my_text.dart';
 import 'package:ecommerce/presentation/layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
+import 'package:ecommerce/presentation/resources/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    HomeLayoutCubit.get(context).getBanners();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -33,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget allBanners() {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is GetBannersLoadingState) {
           return Center(
@@ -43,18 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         if (state is GetBannersDoneState) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                BannerWidget(
-                  items: state.banners
-                      .map(
-                        (e) => getBannerItem(e),
-                      )
-                      .toList(),
-                ),
-              ],
-            ),
+          return BannerWidget(
+            items: state.banners
+                .map(
+                  (e) => getBannerItem(e),
+                )
+                .toList(),
           );
         }
         if (state is GetBannersErrorState) {
@@ -64,7 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         }
-        return Container();
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                ImageAssets.noImage,
+              ),
+            ),
+          ),
+        );
       },
     );
   }

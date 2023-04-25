@@ -1,17 +1,17 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecommerce/app/functions.dart';
 import 'package:ecommerce/presentation/components/button.dart';
 import 'package:ecommerce/presentation/components/text_form_field.dart';
 import 'package:ecommerce/presentation/resources/string_manager.dart';
 import 'package:ecommerce/presentation/resources/styles_manager.dart';
-import 'package:ecommerce/presentation/screens/home/home_screen.dart';
 import 'package:ecommerce/presentation/screens/register/register_cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app/functions.dart';
 import '../../../data/network/local/cache_helper.dart';
+import '../../../data/network/local/keys.dart';
 import '../../../domain/requests/register_request.dart';
 import '../../components/toast_notifications.dart';
 import '../../layouts/home_layout/home_layout.dart';
@@ -41,24 +41,46 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
       ),
       body: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (context, state) {
-          // if (state is RegisterDoneState) {
-          //   if (state.registerModel?.status == 'success') {
-          //     showToast(text: 'Register Success', state: ToastStates.SUCCESS);
-          //     CacheHelper.saveData(
-          //       key: 'token',
-          //       value: state.registerModel?.data?.token,
-          //     ).then((value) {
-          //       // Update Token Value Here ✅
-          //       Constants.token = state.registerModel!.data!.token!;
-          //       navigateAndFinish(context, const HomeLayout());
-          //     });
-          //   } else {
-          //     showToast(
-          //       text: state.registerModel!.message!,
-          //       state: ToastStates.ERROR,
-          //     );
-          //   }
-          // }
+          if (state is RegisterDoneState) {
+            showToast(
+              text: state.registerModel!.message!,
+              state: ToastStates.SUCCESS,
+            );
+            if (state.registerModel!.status!) {
+              CacheHelper.saveData(
+                key: CacheHelperKeys.token,
+                value: state.registerModel?.data?.token,
+              ).then((value) {
+                // Update Token Value Here ✅
+                Constants.token = state.registerModel!.data!.token!;
+                navigateAndFinish(context, const HomeLayout());
+              });
+
+              // FullName:
+              CacheHelper.saveData(
+                key: CacheHelperKeys.fullName,
+                value: state.registerModel?.data?.user?.fullName,
+              ).then((value) {
+                Constants.fullName = state.registerModel?.data?.user?.fullName;
+              });
+
+              // Email:
+              CacheHelper.saveData(
+                key: CacheHelperKeys.email,
+                value: state.registerModel?.data?.user?.email,
+              ).then((value) {
+                Constants.email = state.registerModel?.data?.user?.email;
+              });
+
+              // uId:
+              CacheHelper.saveData(
+                key: CacheHelperKeys.uId,
+                value: state.registerModel?.data?.user?.sId,
+              ).then((value) {
+                Constants.uId = state.registerModel?.data?.user?.sId;
+              });
+            }
+          }
         },
         builder: (context, state) {
           var cubit = RegisterCubit.get(context);
@@ -119,7 +141,6 @@ class _MailVerifyScreenState extends State<MailVerifyScreen> {
                               registerRequest: widget.registerRequest,
                             );
                           }
-                          // navigateAndFinish(context, const HomeLayout());
                         },
                         text: AppStrings.registerNow.tr(),
                         isLoading: state is RegisterLoadingState,

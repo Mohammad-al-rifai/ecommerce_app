@@ -46,9 +46,14 @@ ThemeData getApplicationTheme() {
       toolbarHeight: AppSize.s70,
       shadowColor: ColorManager.lightPrimary,
       systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: ColorManager.white,
-      ),
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarColor: ColorManager.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: ColorManager.white,
+          systemNavigationBarDividerColor: ColorManager.white,
+          systemStatusBarContrastEnforced: false,
+          systemNavigationBarContrastEnforced: false),
       titleTextStyle: getRegularStyle(
         fontSize: FontSize.s16,
         color: ColorManager.primary,

@@ -6,6 +6,7 @@ import 'package:ecommerce/presentation/components/my_text.dart';
 import 'package:ecommerce/presentation/components/text_form_field.dart';
 import 'package:ecommerce/presentation/components/toast_notifications.dart';
 import 'package:ecommerce/presentation/resources/string_manager.dart';
+import 'package:ecommerce/presentation/screens/login/login_screen.dart';
 import 'package:ecommerce/presentation/screens/register/register_cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,6 +145,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           showToast(
               text: AppStrings.yourPasswordHasBeenChangedSuccess.tr(),
               state: ToastStates.SUCCESS);
+          navigateAndFinish(context, const LoginScreen());
         }
       },
       builder: (context, state) {
@@ -268,21 +270,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 count: boarding.length,
               ),
               const Spacer(),
-              // FloatingActionButton(
-              //   onPressed: () {
-              //     if (isLast) {
-              //       submit();
-              //     } else {
-              //       boardController.nextPage(
-              //         duration: const Duration(
-              //           milliseconds: 750,
-              //         ),
-              //         curve: Curves.fastLinearToSlowEaseIn,
-              //       );
-              //     }
-              //   },
-              //   child: const Icon(Icons.arrow_forward_ios),
-              // ),
             ],
           ),
         ],

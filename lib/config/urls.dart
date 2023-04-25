@@ -1,12 +1,13 @@
 class Urls {
-  static const String baseUrl = 'http://192.168.117.232:3000/user/';
+  static const String baseUrl = 'http://192.168.170.232:3000';
 
-  static const String filesUrl =
-      'http://192.168.117.232:3000/api/download?fileName=';
+  static const String filesUrl = '$baseUrl/api/download?fileName=';
 
-  static const String login = 'Customer/auth';
-  static const String register = 'Customer/SignUp';
-  static const String forgetPassword = 'Customer/updatePassword';
-  static const String mailVerify = 'sendCodeToCustomerEmail';
-  static const String banners = 'allUser/getBanners';
+  static const String login = '/user/Customer/auth';
+  static const String register = '/user/Customer/SignUp';
+  static const String forgetPassword = '/user/Customer/updatePassword';
+  static const String mailVerify = '/user/sendCodeToCustomerEmail';
+  static const String banners = '/user/allUser/getBanners';
+  static const String getProfile = '/user/Customer/getProfile';
+  static const String logout = '/user/allUsers/logout';
 }

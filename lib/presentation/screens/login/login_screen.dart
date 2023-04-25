@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/app/functions.dart';
 import 'package:ecommerce/data/network/local/cache_helper.dart';
+import 'package:ecommerce/data/network/local/keys.dart';
 import 'package:ecommerce/presentation/components/button.dart';
 import 'package:ecommerce/presentation/components/my_divider.dart';
 import 'package:ecommerce/presentation/components/text_form_field.dart';
@@ -11,7 +12,6 @@ import 'package:ecommerce/presentation/resources/color_manager.dart';
 import 'package:ecommerce/presentation/resources/constants_manager.dart';
 import 'package:ecommerce/presentation/resources/string_manager.dart';
 import 'package:ecommerce/presentation/resources/styles_manager.dart';
-import 'package:ecommerce/presentation/screens/home/home_screen.dart';
 import 'package:ecommerce/presentation/screens/register/forget_password_screen.dart';
 import 'package:ecommerce/presentation/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -53,18 +53,46 @@ class _LoginScreenState extends State<LoginScreen> {
         create: (context) => LoginCubit(),
         child: BlocConsumer<LoginCubit, LoginStates>(
           listener: (context, state) {
-            // if (state is LoginDoneState) {
-            //   showToast(text: 'Log in Success', state: ToastStates.SUCCESS);
-            //   if (state.loginModel?.status == 'success') {
-            //     CacheHelper.saveData(
-            //       key: 'token',
-            //       value: state.loginModel?.data?.token,
-            //     ).then((value) {
-            //       // Update Token Value Here ✅
-            //       Constants.token = state.loginModel!.data!.token!;
-            //     });
-            //   }
-            // }
+            if (state is LoginDoneState) {
+              showToast(
+                text: state.loginModel!.message!,
+                state: ToastStates.SUCCESS,
+              );
+              if (state.loginModel!.status!) {
+                CacheHelper.saveData(
+                  key: CacheHelperKeys.token,
+                  value: state.loginModel?.data?.token,
+                ).then((value) {
+                  // Update Token Value Here ✅
+                  Constants.token = state.loginModel!.data!.token!;
+                  navigateAndFinish(context, const HomeLayout());
+                });
+
+                // FullName:
+                CacheHelper.saveData(
+                  key: CacheHelperKeys.fullName,
+                  value: state.loginModel?.data?.user?.fullName,
+                ).then((value) {
+                  Constants.fullName = state.loginModel?.data?.user?.fullName;
+                });
+
+                // Email:
+                CacheHelper.saveData(
+                  key: CacheHelperKeys.email,
+                  value: state.loginModel?.data?.user?.email,
+                ).then((value) {
+                  Constants.email = state.loginModel?.data?.user?.email;
+                });
+
+                // uId:
+                CacheHelper.saveData(
+                  key: CacheHelperKeys.uId,
+                  value: state.loginModel?.data?.user?.sId,
+                ).then((value) {
+                  Constants.uId = state.loginModel?.data?.user?.sId;
+                });
+              }
+            }
           },
           builder: (context, state) {
             return Center(
@@ -123,13 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         DefaultButton(
                           function: () {
-                            // if (formKey.currentState!.validate()) {
-                            //   LoginCubit.get(context).login(
-                            //     email: emailController.text,
-                            //     password: passwordController.text,
-                            //   );
-                            // }
-                            navigateAndFinish(context, const HomeLayout());
+                            if (formKey.currentState!.validate()) {
+                              LoginCubit.get(context).login(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                            }
                           },
                           text: AppStrings.login.tr(),
                           isLoading: state is LoginLoadingState,
@@ -171,7 +198,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: AppStrings.register.tr(),
                               function: () {
                                 navigateAndFinish(
-                                    context, const RegisterScreen());
+                                  context,
+                                  const RegisterScreen(),
+                                );
                               },
                             ),
                           ],
