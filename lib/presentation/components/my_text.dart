@@ -12,12 +12,14 @@ class MText extends StatelessWidget {
     this.style,
     this.maxLines = 1,
     this.color,
+    this.textAlign = TextAlign.center,
   }) : super(key: key);
 
   String text;
   TextStyle? style;
   int? maxLines;
   Color? color;
+  TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class MText extends StatelessWidget {
       style: style ?? getMediumStyle(color: color ?? ColorManager.primary),
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
     );
   }
 }

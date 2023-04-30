@@ -42,4 +42,10 @@ class AppStrings {
   static const String no = "no";
   static const String somethingsErrorPleaseCheckYourInternet =
       "somethings_error_please_check_your_internet";
+
+  static const String hotSelling = "hot_selling";
+  static const String showAll = "show_all";
+  static const String merchants = "all_merchants";
+
+// need Translation Form Here:
 }

@@ -1,7 +1,3 @@
-import 'package:ecommerce/data/network/local/keys.dart';
-
-import '../../data/network/local/cache_helper.dart';
-
 class Constants {
   static const int splashDelay = 2;
   static const int sliderAnimationTime = 300;
@@ -18,3 +14,6 @@ class Constants {
   static String? email = "";
   static String? uId = "";
 }
+
+// Admin Token "Muhammad Admin":
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ4MTg2ZGY5NWY0N2E0NmZjYTBmZGIiLCJyb2xlIjoxLCJpYXQiOjE2ODI0NDY0NDV9.KCrPgTwv-LVKA3cSZmZxkphu7M8gTzBFLn-0zig0QAc

@@ -4,12 +4,15 @@ import 'package:ecommerce/config/urls.dart';
 import 'package:ecommerce/data/network/local/cache_helper.dart';
 import 'package:ecommerce/data/network/remote/dio_helper.dart';
 import 'package:ecommerce/domain/models/auth_models/user_profile.dart';
+import 'package:ecommerce/domain/models/categories/all_categories_model.dart';
 import 'package:ecommerce/domain/models/home_models/banner_model.dart';
+import 'package:ecommerce/domain/models/product_models/hot_selling_model.dart';
 import 'package:ecommerce/presentation/components/toast_notifications.dart';
 import 'package:ecommerce/presentation/resources/constants_manager.dart';
 import 'package:ecommerce/presentation/screens/cart/cart_screen.dart';
 import 'package:ecommerce/presentation/screens/home/home_screen.dart';
 import 'package:ecommerce/presentation/screens/profile/profile_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -33,6 +36,16 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     const ProfileScreen(),
   ];
 
+  List<BottomNavigationBarItem> bottomItems = [
+    BottomNavigationBarItem(icon: const Icon(Icons.home), label: 'home'.tr()),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.apps), label: 'categories'.tr()),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.shopping_bag_rounded), label: 'cart'.tr()),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.person), label: 'profile'.tr()),
+  ];
+
   List<String> titles = [
     'home'.tr(),
     'categories'.tr(),
@@ -45,11 +58,10 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
       function(index);
     }
     currentIndex = index;
-    emit(ChangeBottomNavState());
+    emit(ChangeBottomNavState(index: currentIndex));
   }
 
   // Get Profile
-
   UserProfileModel userProfileModel = UserProfileModel();
 
   getProfile() {
@@ -77,7 +89,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   }
 
   // Get Banners
-
   BannersModel bannersModel = BannersModel();
 
   getBanners() {
@@ -94,6 +105,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     });
   }
 
+  // Logout
   logout() {
     emit(LogoutLoadingState());
     DioHelper.getData(
@@ -108,6 +120,71 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
     }).catchError((err) {
       print(err.toString());
       emit(LogoutErrorState());
+    });
+  }
+
+  //Get HotSelling
+  HotSellingModel? hotSellingModel = HotSellingModel();
+  List<HotSellingProduct>? products = [];
+  int hotSellingPage = 1;
+
+  getHotSelling() {
+    emit(GetHotSellingLoadingState());
+    DioHelper.getData(
+      url: Urls.getHotSelling,
+    ).then((value) {
+      hotSellingModel = HotSellingModel.fromJson(value.data);
+      if (value.data['status']) {
+        if (kDebugMode) {
+          print('Get HotSelling Done✅');
+        }
+        products = hotSellingModel?.data?.products;
+      }
+      emit(GetHotSellingDoneState(products: products));
+    }).catchError((err) {
+      print(err.toString());
+      emit(GetHotSellingErrorState());
+    });
+  }
+
+  // GetCategories
+
+  CategoriesModel? categoriesModel = CategoriesModel();
+  List<CategoryData>? categories = [];
+  int categoriesPage = 1;
+
+  getCategories() {
+    emit(GetCategoriesLoadingState());
+
+    DioHelper.getData(
+      url: Urls.getCategories,
+    ).then((value) {
+      categoriesModel = CategoriesModel.fromJson(value.data);
+
+      if (value.data['status']) {
+        categories = categoriesModel?.data;
+      }
+      emit(GetCategoriesDoneState(categories: categories));
+    }).catchError((err) {
+      print(err.toString());
+      emit(GetCategoriesErrorState());
+    });
+  }
+
+  // Get All Merchants States:
+
+  getMerchant() {
+    emit(GetMerchantsLoadingState());
+
+    DioHelper.getData(
+      url: Urls.getAllMerchants,
+    ).then((value) {
+      if (value.data['status']) {
+        print('GetMerchants Done ✔️');
+      }
+      emit(GetMerchantsDoneState());
+    }).catchError((err) {
+      emit(GetMerchantsErrorState());
     });
   }
 }

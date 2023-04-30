@@ -35,5 +35,8 @@
   "are_you_sure_you_want_to_logout": "هل أنت متأكد من تسجيل الخروج؟",
   "yes": "نعم",
   "no": "لا",
-  "somethings_error_please_check_your_internet": "حدث خطأ ما, برجاء التحقق من إتصالك بالإنترنت."
+  "somethings_error_please_check_your_internet": "حدث خطأ ما, برجاء التحقق من إتصالك بالإنترنت.",
+  "hot_selling": "الأكثر بيعاً",
+  "show_all": "عرض الكل",
+  "all_merchants": "كل التجار"
 }
