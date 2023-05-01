@@ -37,8 +37,8 @@ Widget getHotSelling(context) {
                 crossAxisSpacing: 3.0,
                 mainAxisSpacing: 3.0,
               ),
-              itemCount:10
-                  /*state.products!.length > 2 ? 2 : state.products?.length*/,
+              itemCount:
+                  state.products!.length > 2 ? 2 : state.products?.length,
               itemBuilder: (context, index) {
                 return buildProItem(state.products![0], context);
               },

@@ -11,6 +11,7 @@ import 'package:ecommerce/presentation/components/my_text.dart';
 import 'package:ecommerce/presentation/components/text_button.dart';
 import 'package:ecommerce/presentation/components/toast_notifications.dart';
 import 'package:ecommerce/presentation/layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
+import 'package:ecommerce/presentation/resources/assets_manager.dart';
 import 'package:ecommerce/presentation/resources/color_manager.dart';
 import 'package:ecommerce/presentation/resources/constants_manager.dart';
 import 'package:ecommerce/presentation/resources/string_manager.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../domain/models/auth_models/user_profile.dart';
 
@@ -123,14 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    radius: AppSize.s40,
-                    child: Icon(
-                      Icons.person,
-                      size: AppSize.s50,
-                      color: ColorManager.white,
-                    ),
-                  ),
+                  Lottie.asset(JsonAssets.login),
                   const SizedBox(
                     width: 5.0,
                   ),
@@ -147,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                       fallbackBuilder: (BuildContext context) {
-                        return DefaultLoading();
+                        return const DefaultLoading();
                       },
                     ),
                 ],
@@ -164,20 +159,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget login2AccountWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MText(
-          text: AppStrings.loginNow2YourAccount,
-        ),
-        DefaultButton(
-          function: () {
-            navigateTo(context, const LoginScreen());
-          },
-          text: AppStrings.login.tr(),
-          width: 90.0,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MText(
+            text: AppStrings.loginNow2YourAccount,
+          ),
+          DefaultButton(
+            function: () {
+              navigateTo(context, const LoginScreen());
+            },
+            text: AppStrings.login.tr(),
+            width: 90.0,
+          ),
+        ],
+      ),
     );
   }
 
@@ -209,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           text: AppStrings.areYouSureYouWantToLogout,
                         ),
                         state is LogoutLoadingState
-                            ? DefaultLoading()
+                            ? const DefaultLoading()
                             : Container(),
                         state is LogoutErrorState
                             ? MText(
@@ -266,21 +263,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget userData({
     UserInfo? userInfo,
   }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MText(
-          text: userInfo?.fullName ??
-              CacheHelper.getData(key: CacheHelperKeys.fullName),
-          color: ColorManager.darkPrimary,
-        ),
-        MText(
-          text: userInfo?.email ??
-              CacheHelper.getData(key: CacheHelperKeys.email),
-          color: ColorManager.darkPrimary,
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MText(
+            text: userInfo?.fullName ??
+                CacheHelper.getData(key: CacheHelperKeys.fullName),
+            color: ColorManager.darkPrimary,
+          ),
+          MText(
+            text: userInfo?.email ??
+                CacheHelper.getData(key: CacheHelperKeys.email),
+            color: ColorManager.darkPrimary,
+          ),
+        ],
+      ),
     );
   }
 

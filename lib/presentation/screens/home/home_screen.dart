@@ -1,4 +1,5 @@
 import 'package:ecommerce/presentation/resources/string_manager.dart';
+import 'package:ecommerce/presentation/resources/values_manager.dart';
 import 'package:ecommerce/presentation/screens/home/widgets/categories_widget.dart';
 import 'package:ecommerce/presentation/screens/home/widgets/merchants_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const DefaultLabel(text: AppStrings.hotSelling),
           getHotSelling(context),
           const DefaultLabel(text: AppStrings.merchants),
-          allMerchants(),
+          const AllMerchantsWidget(),
         ],
       ),
     );

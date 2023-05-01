@@ -48,4 +48,8 @@ class AppStrings {
   static const String merchants = "all_merchants";
 
 // need Translation Form Here:
+
+  static const String welcomeHere = "Welcome Here";
+  static const String products = "Products";
+  static const String offers = "Offers";
 }

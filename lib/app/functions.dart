@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/app/languages.dart';
 import 'package:flutter/material.dart';
@@ -67,5 +69,18 @@ getDeco({
           ]
         : [],
     image: image,
+  );
+}
+
+String getRandomString(int length) {
+  const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+  Random r = Random();
+  return String.fromCharCodes(
+    Iterable.generate(
+      length,
+      (_) => ch.codeUnitAt(
+        r.nextInt(ch.length),
+      ),
+    ),
   );
 }

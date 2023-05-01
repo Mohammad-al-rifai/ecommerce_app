@@ -85,6 +85,10 @@ class GetCategoriesErrorState extends HomeLayoutStates {
 
 class GetMerchantsLoadingState extends HomeLayoutStates {}
 
-class GetMerchantsDoneState extends HomeLayoutStates {}
+class GetMerchantsDoneState extends HomeLayoutStates {
+  final List<MerchantUser>? merchants;
+
+  GetMerchantsDoneState({this.merchants});
+}
 
 class GetMerchantsErrorState extends HomeLayoutStates {}

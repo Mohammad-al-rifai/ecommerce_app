@@ -17,7 +17,7 @@ class DefaultCarousalWidget extends StatelessWidget {
   getCarousalSlider(context) => CarouselSlider(
         options: CarouselOptions(
           // height: 200,
-          aspectRatio: 16 / 9,
+          aspectRatio: 16 / 8,
           viewportFraction: 0.8,
           initialPage: 0,
           enableInfiniteScroll: true,

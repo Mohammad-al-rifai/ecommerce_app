@@ -7,8 +7,7 @@ import '../../../../app/functions.dart';
 import '../../../../config/urls.dart';
 import '../../../../domain/models/home_models/banner_model.dart';
 import '../../../components/default_carousal_slider.dart';
-import '../../../components/error.dart';
-import '../../../components/loading.dart';
+
 import '../../../components/my_text.dart';
 import '../../../layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
 import '../../../resources/assets_manager.dart';

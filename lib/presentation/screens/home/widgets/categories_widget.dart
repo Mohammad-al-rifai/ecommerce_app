@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/presentation/components/my_text.dart';
 import 'package:ecommerce/presentation/resources/color_manager.dart';
+import 'package:ecommerce/presentation/screens/home/widgets/view_all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,55 +23,37 @@ Widget categoriesWidget() {
             height: AppSize.s60,
             child: Row(
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemExtent: AppSize.s60,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsetsDirectional.symmetric(
-                        horizontal: 4.0,
-                      ),
-                      child: CircleAvatar(
-                        backgroundColor: ColorManager.primary,
-                        backgroundImage: CachedNetworkImageProvider(
-                          Urls.filesUrl +
-                              (state.categories?[index].imageOfCate ?? ''),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemExtent: AppSize.s60,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                          horizontal: 4.0,
                         ),
-                        child: MText(
-                          text: getNameTr(
-                            arName: state.categories?[index].arName,
-                            enName: state.categories?[index].enName,
+                        child: CircleAvatar(
+                          backgroundColor: ColorManager.primary,
+                          backgroundImage: CachedNetworkImageProvider(
+                            Urls.filesUrl +
+                                (state.categories?[index].imageOfCate ?? ''),
                           ),
-                          color: ColorManager.darkPrimary,
+                          child: MText(
+                            text: getNameTr(
+                              arName: state.categories?[index].arName,
+                              enName: state.categories?[index].enName,
+                            ),
+                            color: ColorManager.darkPrimary,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: state.categories?.length ?? 2,
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    end: AppPadding.p8,
-                    start: AppPadding.p4,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      cubit.changeBottom(1);
+                      );
                     },
-                    child: CircleAvatar(
-                      backgroundColor: ColorManager.primary,
-                      radius: 25.0,
-                      child: MText(
-                        text: AppStrings.showAll,
-                        color: ColorManager.white,
-                        maxLines: 2,
-                      ),
-                    ),
+                    itemCount: state.categories?.length ?? 2,
                   ),
                 ),
+                ViewAllWidget(onTap: () {}),
               ],
             ),
           );

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:ecommerce/config/urls.dart';
 import 'package:ecommerce/data/network/local/cache_helper.dart';
 import 'package:ecommerce/data/network/remote/dio_helper.dart';
+import 'package:ecommerce/domain/models/auth_models/merchants_model.dart';
 import 'package:ecommerce/domain/models/auth_models/user_profile.dart';
 import 'package:ecommerce/domain/models/categories/all_categories_model.dart';
 import 'package:ecommerce/domain/models/home_models/banner_model.dart';
@@ -173,16 +174,21 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   // Get All Merchants States:
 
+  MerchantsModel? merchantsModel = MerchantsModel();
+  List<MerchantUser>? merchants = [];
+
   getMerchant() {
     emit(GetMerchantsLoadingState());
 
     DioHelper.getData(
       url: Urls.getAllMerchants,
     ).then((value) {
+      merchantsModel = MerchantsModel.fromJson(value.data);
       if (value.data['status']) {
+        merchants = merchantsModel?.data?.user;
         print('GetMerchants Done ✔️');
       }
-      emit(GetMerchantsDoneState());
+      emit(GetMerchantsDoneState(merchants: merchants));
     }).catchError((err) {
       emit(GetMerchantsErrorState());
     });
