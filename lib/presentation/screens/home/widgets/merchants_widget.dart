@@ -81,10 +81,6 @@ class _AllMerchantsWidgetState extends State<AllMerchantsWidget> {
           backgroundImage: CachedNetworkImageProvider(
             Urls.filesUrl + (user?.marketLogo ?? ''),
           ),
-          child: MText(
-            text: user?.marketName ?? 'no Name',
-            color: ColorManager.darkPrimary,
-          ),
         ),
       ),
     );
