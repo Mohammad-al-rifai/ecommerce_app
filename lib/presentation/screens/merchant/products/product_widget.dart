@@ -1,12 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce/config/urls.dart';
-import 'package:ecommerce/presentation/screens/merchant/products/product_details/details_screen.dart';
+import 'package:ecommerce/presentation/screens/merchant/products/details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/functions.dart';
 import '../../../../domain/models/product_models/merchant_products_model.dart';
-import '../../../components/my_text.dart';
+import '../../../components/default_image.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/values_manager.dart';
 
@@ -41,10 +39,7 @@ class ProductWidget extends StatelessWidget {
             decoration: getDeco(borderSize: AppSize.s8),
             child: Hero(
               tag: product?.mainImage ?? 'Details',
-              child: CachedNetworkImage(
-                imageUrl: Urls.filesUrl + (product?.mainImage ?? ''),
-                fit: BoxFit.cover,
-              ),
+              child: DefaultImage(imageUrl: product?.mainImage),
             ),
           ),
           Padding(

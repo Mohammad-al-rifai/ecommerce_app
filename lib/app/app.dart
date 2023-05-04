@@ -28,7 +28,14 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context) => RegisterCubit()),
-        BlocProvider(create: (BuildContext context) => HomeLayoutCubit()),
+        BlocProvider(
+          create: (BuildContext context) => HomeLayoutCubit()
+            ..getBanners()
+            ..getCategories()
+            ..getHotSelling()
+            ..getProfile()
+            ..getMerchant(),
+        ),
         BlocProvider(create: (BuildContext context) => MerchantLayoutCubit()),
       ],
       child: MaterialApp(

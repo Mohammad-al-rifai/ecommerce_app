@@ -1,79 +1,85 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce/presentation/components/my_text.dart';
+import 'package:ecommerce/presentation/components/loading.dart';
 import 'package:ecommerce/presentation/resources/color_manager.dart';
 import 'package:ecommerce/presentation/screens/home/widgets/view_all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 
-import '../../../../app/functions.dart';
-import '../../../../config/urls.dart';
+import '../../../components/default_element.dart';
+import '../../../components/default_image.dart';
 import '../../../layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
 import '../../../resources/string_manager.dart';
 import '../../../resources/values_manager.dart';
 
-Widget categoriesWidget() {
-  return BlocProvider(
-    create: (context) => HomeLayoutCubit()..getCategories(),
-    child: BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
+class CategoriesWidget extends StatelessWidget {
+  const CategoriesWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
       listener: (context, state) {},
       builder: (context, state) {
         HomeLayoutCubit cubit = HomeLayoutCubit.get(context);
-        if (state is GetCategoriesDoneState) {
-          return SizedBox(
-            height: AppSize.s60,
-            child: Row(
+        return Conditional.single(
+          context: context,
+          conditionBuilder: (context) => cubit.categories.isNotEmpty,
+          widgetBuilder: (context) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemExtent: AppSize.s60,
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsetsDirectional.symmetric(
-                          horizontal: 4.0,
+                const DefaultLabel(text: AppStrings.categories),
+                SizedBox(
+                  height: AppSize.s60,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return buildCatItem(
+                              cubit.categories[index].imageOfCate,
+                            );
+                          },
+                          itemCount: cubit.categories.length,
                         ),
-                        child: CircleAvatar(
-                          backgroundColor: ColorManager.primary,
-                          backgroundImage: CachedNetworkImageProvider(
-                            Urls.filesUrl +
-                                (state.categories?[index].imageOfCate ?? ''),
-                          ),
-                          child: MText(
-                            text: getNameTr(
-                              arName: state.categories?[index].arName,
-                              enName: state.categories?[index].enName,
-                            ),
-                            color: ColorManager.darkPrimary,
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: state.categories?.length ?? 2,
+                      ),
+                      ViewAllWidget(onTap: () {}),
+                    ],
                   ),
                 ),
-                ViewAllWidget(onTap: () {}),
               ],
-            ),
-          );
-        }
-        if (state is GetCategoriesLoadingState) {
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 4.0,
-            ),
-            child: CircleAvatar(
-              backgroundColor: ColorManager.primary,
-              child: MText(
-                text: 'noName',
-                color: ColorManager.white,
-              ),
-            ),
-          );
-        }
-        return const SizedBox();
+            );
+          },
+          fallbackBuilder: (context) {
+            return const DefaultLoading();
+          },
+        );
       },
-    ),
-  );
+    );
+  }
+
+  Widget buildCatItem(String? imageUrl) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 4.0,
+      ),
+      child: Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSize.s30),
+          color: ColorManager.primary,
+        ),
+        child: CircleAvatar(
+          radius: AppSize.s30,
+          child: DefaultImage(
+            imageUrl: imageUrl,
+            fit: BoxFit.contain,
+            clickable: true,
+          ),
+        ),
+      ),
+    );
+  }
 }

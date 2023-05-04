@@ -67,26 +67,30 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   getProfile() {
     emit(GetProfileLoadingState());
-    DioHelper.getData(
-      url: Urls.getProfile,
-      token: Constants.bearer + Constants.token,
-    ).then((value) {
-      userProfileModel = UserProfileModel.fromJson(value.data);
-      if (value.data['status']) {
-        CacheHelper.saveData(
-          key: CacheHelperKeys.fullName,
-          value: userProfileModel.data?.user?.fullName,
-        );
-        CacheHelper.saveData(
-          key: CacheHelperKeys.email,
-          value: userProfileModel.data?.user?.email,
-        );
-      }
+    if (Constants.token.isNotEmpty) {
       emit(GetProfileDoneState());
-    }).catchError((err) {
-      print(err.toString());
-      emit(GetProfileErrorState());
-    });
+    } else {
+      DioHelper.getData(
+        url: Urls.getProfile,
+        token: Constants.bearer + Constants.token,
+      ).then((value) {
+        userProfileModel = UserProfileModel.fromJson(value.data);
+        if (value.data['status']) {
+          CacheHelper.saveData(
+            key: CacheHelperKeys.fullName,
+            value: userProfileModel.data?.user?.fullName,
+          );
+          CacheHelper.saveData(
+            key: CacheHelperKeys.email,
+            value: userProfileModel.data?.user?.email,
+          );
+        }
+        emit(GetProfileDoneState());
+      }).catchError((err) {
+        print(err.toString());
+        emit(GetProfileErrorState());
+      });
+    }
   }
 
   // Get Banners
@@ -95,15 +99,20 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
   getBanners() {
     emit(GetBannersLoadingState());
 
-    DioHelper.getData(url: Urls.banners).then((value) {
-      if (value.data['status']) {
-        bannersModel = BannersModel.fromJson(value.data);
-        emit(GetBannersDoneState(banners: bannersModel.data!.banners!));
-      }
-    }).catchError((err) {
-      print(err.toString());
-      emit(GetBannersErrorState());
-    });
+    if (bannersModel.data?.banners != null &&
+        bannersModel.data!.banners!.isNotEmpty) {
+      emit(GetBannersDoneState(banners: bannersModel.data!.banners!));
+    } else {
+      DioHelper.getData(url: Urls.banners).then((value) {
+        if (value.data['status']) {
+          bannersModel = BannersModel.fromJson(value.data);
+          emit(GetBannersDoneState(banners: bannersModel.data!.banners!));
+        }
+      }).catchError((err) {
+        print(err.toString());
+        emit(GetBannersErrorState());
+      });
+    }
   }
 
   // Logout
@@ -126,71 +135,85 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates> {
 
   //Get HotSelling
   HotSellingModel? hotSellingModel = HotSellingModel();
-  List<HotSellingProduct>? products = [];
-  int hotSellingPage = 1;
+  List<HotSellingProduct> products = [];
 
   getHotSelling() {
     emit(GetHotSellingLoadingState());
-    DioHelper.getData(
-      url: Urls.getHotSelling,
-    ).then((value) {
-      hotSellingModel = HotSellingModel.fromJson(value.data);
-      if (value.data['status']) {
-        if (kDebugMode) {
-          print('Get HotSelling Done✅');
-        }
-        products = hotSellingModel?.data?.products;
-      }
+
+    if (products.isNotEmpty) {
       emit(GetHotSellingDoneState(products: products));
-    }).catchError((err) {
-      print(err.toString());
-      emit(GetHotSellingErrorState());
-    });
+    } else {
+      DioHelper.getData(
+        url: Urls.getHotSelling,
+      ).then((value) {
+        hotSellingModel = HotSellingModel.fromJson(value.data);
+        if (value.data['status']) {
+          if (hotSellingModel?.data?.products != null) {
+            products = hotSellingModel!.data!.products;
+            emit(GetHotSellingDoneState(products: products));
+          }
+        }
+      }).catchError((err) {
+        print(err.toString());
+        emit(GetHotSellingErrorState());
+      });
+    }
   }
 
   // GetCategories
 
   CategoriesModel? categoriesModel = CategoriesModel();
-  List<CategoryData>? categories = [];
-  int categoriesPage = 1;
+  List<CategoryData> categories = [];
 
   getCategories() {
     emit(GetCategoriesLoadingState());
-
-    DioHelper.getData(
-      url: Urls.getCategories,
-    ).then((value) {
-      categoriesModel = CategoriesModel.fromJson(value.data);
-
-      if (value.data['status']) {
-        categories = categoriesModel?.data;
-      }
+    if (categories.isNotEmpty) {
       emit(GetCategoriesDoneState(categories: categories));
-    }).catchError((err) {
-      print(err.toString());
-      emit(GetCategoriesErrorState());
-    });
+    } else {
+      DioHelper.getData(
+        url: Urls.getCategories,
+      ).then((value) {
+        categoriesModel = CategoriesModel.fromJson(value.data);
+        if (value.data['status']) {
+          if (categoriesModel?.data != null &&
+              categoriesModel!.data!.isNotEmpty) {
+            categories = categoriesModel!.data!;
+            emit(GetCategoriesDoneState(categories: categories));
+          }
+        }
+      }).catchError((err) {
+        print(err.toString());
+        emit(GetCategoriesErrorState());
+      });
+    }
   }
 
   // Get All Merchants States:
 
   MerchantsModel? merchantsModel = MerchantsModel();
-  List<MerchantUser>? merchants = [];
+  List<MerchantUser> merchants = [];
 
   getMerchant() {
     emit(GetMerchantsLoadingState());
 
-    DioHelper.getData(
-      url: Urls.getAllMerchants,
-    ).then((value) {
-      merchantsModel = MerchantsModel.fromJson(value.data);
-      if (value.data['status']) {
-        merchants = merchantsModel?.data?.user;
-        print('GetMerchants Done ✔️');
-      }
+    if (merchants.isNotEmpty) {
       emit(GetMerchantsDoneState(merchants: merchants));
-    }).catchError((err) {
-      emit(GetMerchantsErrorState());
-    });
+    } else {
+      DioHelper.getData(
+        url: Urls.getAllMerchants,
+      ).then((value) {
+        merchantsModel = MerchantsModel.fromJson(value.data);
+        if (value.data['status']) {
+          if (merchantsModel?.data?.user != null) {
+            if (merchantsModel!.data!.user!.isNotEmpty) {
+              merchants = merchantsModel!.data!.user!;
+              emit(GetMerchantsDoneState(merchants: merchants));
+            }
+          }
+        }
+      }).catchError((err) {
+        emit(GetMerchantsErrorState());
+      });
+    }
   }
 }

@@ -3,11 +3,14 @@ import 'package:ecommerce/presentation/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../../../../../app/functions.dart';
-import '../../../../resources/values_manager.dart';
+import '../../app/functions.dart';
+import '../resources/values_manager.dart';
 
 class FullScreenPicture extends StatefulWidget {
-  const FullScreenPicture({Key? key, required this.imageUrl}) : super(key: key);
+  const FullScreenPicture({
+    Key? key,
+    required this.imageUrl,
+  }) : super(key: key);
 
   final String imageUrl;
 

@@ -32,7 +32,8 @@ class _MerchantLayoutState extends State<MerchantLayout> {
     return DefaultTabController(
       length: 3,
       child: BlocProvider(
-        create: (context) => MerchantLayoutCubit(),
+        create: (context) => MerchantLayoutCubit()
+          ..getMerchantProducts(merchantId: widget.merchantUser?.sId ?? ''),
         child: BlocConsumer<MerchantLayoutCubit, MerchantLayoutStates>(
           listener: (context, state) {},
           builder: (context, state) {

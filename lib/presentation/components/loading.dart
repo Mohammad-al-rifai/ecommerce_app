@@ -18,13 +18,13 @@ class DefaultLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(xT, yT),
-      child: Lottie.asset(
-        JsonAssets.loading,
-        fit: BoxFit.fitWidth,
-        width: size ?? 50.0,
-        height: size??50.0
+    return SizedBox(
+      child: Center(
+        child: Transform.translate(
+          offset: Offset(xT, yT),
+          child: Lottie.asset(JsonAssets.loading,
+              fit: BoxFit.fitWidth, width: size ?? 50.0, height: size ?? 50.0),
+        ),
       ),
     );
   }

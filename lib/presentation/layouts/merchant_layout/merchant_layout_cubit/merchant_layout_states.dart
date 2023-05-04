@@ -15,3 +15,15 @@ class GetMerchantProDoneState extends MerchantLayoutStates {
 }
 
 class GetMerchantProErrorState extends MerchantLayoutStates {}
+
+// Get Product Gallery States:
+
+class GetProductGalleryLoadingState extends MerchantLayoutStates {}
+
+class GetProductGalleryDoneState extends MerchantLayoutStates {
+  final List<String>? gallery;
+
+  GetProductGalleryDoneState({required this.gallery});
+}
+
+class GetProductGalleryErrorState extends MerchantLayoutStates {}
