@@ -1,5 +1,5 @@
 class Urls {
-  static const String baseUrl = 'http://192.168.26.232:3000';
+  static const String baseUrl = 'http://192.168.172.232:3000';
 
   static const String filesUrl = '$baseUrl/api/download?fileName=';
 

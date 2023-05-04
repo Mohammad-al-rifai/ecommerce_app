@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:ecommerce/config/urls.dart';
 import 'package:ecommerce/data/network/remote/dio_helper.dart';
 import 'package:ecommerce/domain/models/product_models/product_galery_model.dart';
@@ -75,36 +74,5 @@ class MerchantLayoutCubit extends Cubit<MerchantLayoutStates> {
     }
   }
 
-  // get product Gallery:
 
-  ProductGalleryModel productGalleryModel = ProductGalleryModel();
-  List<String>? gallery = [];
-
-  getProductGallery({
-    required String proId,
-  }) {
-    emit(GetProductGalleryLoadingState());
-    DioHelper.getData(
-      url: Urls.getGalleryProduct + proId,
-    ).then((value) {
-      productGalleryModel = ProductGalleryModel.fromJson(value.data);
-      if (value.data['status']) {
-        if (productGalleryModel.data != null &&
-            productGalleryModel.data?.gallery != null &&
-            productGalleryModel.data?.gallery?.gallery != null) {
-          if (productGalleryModel.data!.gallery!.gallery!.isNotEmpty) {
-            print('GetProduct Gallery Done');
-            emit(
-              GetProductGalleryDoneState(
-                gallery: productGalleryModel.data?.gallery?.gallery,
-              ),
-            );
-          }
-        }
-      }
-    }).catchError((err) {
-      print(err.toString());
-      emit(GetProductGalleryErrorState());
-    });
-  }
 }

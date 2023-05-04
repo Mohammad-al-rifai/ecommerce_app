@@ -8,13 +8,8 @@ import 'package:ecommerce/presentation/resources/values_manager.dart';
 import 'package:ecommerce/presentation/screens/merchant/products/product_details_widgets/gallery_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../../../../config/urls.dart';
 import '../../../../domain/models/product_models/merchant_products_model.dart';
-import '../../../components/my_page_view.dart';
-import '../../../resources/color_manager.dart';
-import '../../../components/full_screen_picture.dart';
+import '../../../cubit/product_cubit/product_cubit.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
@@ -36,20 +31,33 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GalleryWidget(product: widget.product),
-              const SizedBox(
-                height: AppSize.s4,
+    return BlocProvider(
+      create: (context) =>
+          ProductCubit()..getProductGallery(proId: widget.product?.id ?? ''),
+      child: BlocConsumer<ProductCubit, ProductStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GalleryWidget(product: widget.product),
+                    const SizedBox(
+                      height: AppSize.s4,
+                    ),
+                    MText(
+                      text: widget.product?.mainCategorie ??
+                          'mainCategorie empty!',
+                    )
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
