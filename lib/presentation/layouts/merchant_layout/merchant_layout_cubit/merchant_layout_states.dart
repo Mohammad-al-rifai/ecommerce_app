@@ -16,6 +16,14 @@ class GetMerchantProDoneState extends MerchantLayoutStates {
 
 class GetMerchantProErrorState extends MerchantLayoutStates {}
 
+// Get Merchant Categories
+
+class GetMerchantCategoriesLoadingState extends MerchantLayoutStates {}
+
+class GetMerchantCategoriesDoneState extends MerchantLayoutStates {}
+
+class GetMerchantCategoriesErrorState extends MerchantLayoutStates {}
+
 // Get Product Gallery States:
 
 class GetProductGalleryLoadingState extends MerchantLayoutStates {}

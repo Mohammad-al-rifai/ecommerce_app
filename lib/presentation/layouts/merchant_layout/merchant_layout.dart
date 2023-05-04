@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/models/auth_models/merchants_model.dart';
 import '../../components/my_text.dart';
-import '../../screens/merchant/categories/categories_screen.dart';
+import '../../screens/merchant/categories/merchant_categories_screen.dart';
 import '../../screens/merchant/offers/offers_screen.dart';
 import '../../screens/merchant/products/product_screen.dart';
 
@@ -33,7 +33,8 @@ class _MerchantLayoutState extends State<MerchantLayout> {
       length: 3,
       child: BlocProvider(
         create: (context) => MerchantLayoutCubit()
-          ..getMerchantProducts(merchantId: widget.merchantUser?.sId ?? ''),
+          ..getMerchantProducts(merchantId: widget.merchantUser?.sId ?? '')
+          ..getMerchantCategories(merchantId: widget.merchantUser?.sId ?? ''),
         child: BlocConsumer<MerchantLayoutCubit, MerchantLayoutStates>(
           listener: (context, state) {},
           builder: (context, state) {

@@ -2,15 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:ecommerce/config/urls.dart';
 import 'package:ecommerce/data/network/remote/dio_helper.dart';
 import 'package:ecommerce/domain/models/product_models/product_galery_model.dart';
-import 'package:ecommerce/presentation/components/button.dart';
-import 'package:ecommerce/presentation/resources/string_manager.dart';
-import 'package:ecommerce/presentation/screens/merchant/categories/categories_screen.dart';
-import 'package:ecommerce/presentation/screens/merchant/offers/offers_screen.dart';
-import 'package:ecommerce/presentation/screens/merchant/products/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../domain/models/categories/all_categories_model.dart';
 import '../../../../domain/models/product_models/merchant_products_model.dart';
 
 part 'merchant_layout_states.dart';
@@ -48,9 +44,36 @@ class MerchantLayoutCubit extends Cubit<MerchantLayoutStates> {
     }
   }
 
+  // Get Merchant Categories
 
+  CategoriesModel? categoriesModel = CategoriesModel();
+  List<CategoryData> categories = [];
 
-
+  getMerchantCategories({
+    required String merchantId,
+  }) {
+    emit(GetMerchantCategoriesLoadingState());
+    if (categories.isNotEmpty) {
+      emit(GetMerchantCategoriesDoneState());
+    } else {
+      DioHelper.getData(
+        url: Urls.getCategories,
+        query: {'owner': merchantId},
+      ).then((value) {
+        categoriesModel = CategoriesModel.fromJson(value.data);
+        if (value.data['status']) {
+          if (categoriesModel?.data != null &&
+              categoriesModel!.data!.isNotEmpty) {
+            categories = categoriesModel!.data!;
+            emit(GetMerchantCategoriesDoneState());
+          }
+        }
+      }).catchError((err) {
+        print(err.toString());
+        emit(GetMerchantCategoriesLoadingState());
+      });
+    }
+  }
 
   // get product Gallery:
 

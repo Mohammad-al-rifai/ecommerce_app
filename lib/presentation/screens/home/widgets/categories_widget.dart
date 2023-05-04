@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 
+import '../../../../domain/models/categories/all_categories_model.dart';
 import '../../../components/default_element.dart';
 import '../../../components/default_image.dart';
 import '../../../layouts/home_layout/home_layout_cubit/home_layout_cubit.dart';
 import '../../../resources/string_manager.dart';
 import '../../../resources/values_manager.dart';
+import '../../shared_widgets/category_widget.dart';
 
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class CategoriesWidget extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return buildCatItem(
-                              cubit.categories[index].imageOfCate,
+                              catData: cubit.categories[index],
                             );
                           },
                           itemCount: cubit.categories.length,
@@ -60,7 +62,9 @@ class CategoriesWidget extends StatelessWidget {
     );
   }
 
-  Widget buildCatItem(String? imageUrl) {
+  Widget buildCatItem({
+    required CategoryData catData,
+  }) {
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: 4.0,
@@ -74,7 +78,7 @@ class CategoriesWidget extends StatelessWidget {
         child: CircleAvatar(
           radius: AppSize.s30,
           child: DefaultImage(
-            imageUrl: imageUrl,
+            imageUrl: catData.imageOfCate,
             fit: BoxFit.contain,
             clickable: true,
           ),

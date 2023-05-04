@@ -11,7 +11,7 @@ class Urls {
   static const String getProfile = '/user/Customer/getProfile';
   static const String logout = '/user/allUsers/logout';
   static const String getHotSelling = '/user/allUsers/getHotSelling';
-  static const String getCategories = '/user/allUsers/getCategorie';
+  static const String getCategories = '/user/allUsers/getCategorie/';
   static const String getAllMerchants = '/user/allUsers/getAllMerchants/';
   static const String getMerchantProducts = '/user/allUsers/MerchantProducts/';
   static const String getGalleryProduct = '/user/allUsers/GalleryProduct/';
