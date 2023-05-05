@@ -32,8 +32,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          ProductCubit()..getProductGallery(proId: widget.product?.id ?? ''),
+      create: (context) => ProductCubit()
+        ..getProductGallery(proId: widget.product?.id ?? '')
+        ..getVideoOfProduct(proId: widget.product?.id ?? ''),
       child: BlocConsumer<ProductCubit, ProductStates>(
         listener: (context, state) {},
         builder: (context, state) {

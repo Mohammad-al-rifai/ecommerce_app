@@ -30,14 +30,15 @@ class GalleryWidget extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         ProductCubit cubit = ProductCubit.get(context);
-        if (state is GetProductGalleryDoneState) {
+        if (state is GetProductGalleryDoneState || cubit.gallery.isNotEmpty) {
           return MyPageView(
             controller: galleryController,
             height: AppSize.s260,
             pageWidget: (context, index) {
               if (index == 0) {
                 return buildMainImage(context);
-              } else if (index == cubit.gallery.length + 1) {
+              } else if (index == cubit.gallery.length + 1 &&
+                  cubit.videoUrl.isNotEmpty) {
                 return const VideoWidget(
                   videoUrl:
                       'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
@@ -52,7 +53,8 @@ class GalleryWidget extends StatelessWidget {
                 );
               }
             },
-            itemCount: 2 + cubit.gallery.length,
+            itemCount: (cubit.videoUrl.isNotEmpty ? 1 : 0) +
+                (1 + cubit.gallery.length),
           );
         } else {
           return buildMainImage(context);

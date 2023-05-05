@@ -1,3 +1,4 @@
+import 'package:ecommerce/domain/models/product_models/video_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -42,5 +43,35 @@ class ProductCubit extends Cubit<ProductStates> {
         emit(GetProductGalleryErrorState());
       });
     }
+  }
+
+  // Get Video of Product:
+
+  VideoModel? videoModel = VideoModel();
+  String videoUrl = 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4';
+
+  getVideoOfProduct({
+    required String proId,
+  }) {
+    emit(GetProductVideoLoadingState());
+
+    DioHelper.getData(
+      url: Urls.getVideoProduct + proId,
+    ).then((value) {
+      if (value.data['status']) {
+        videoModel = VideoModel.fromJson(value.data);
+        if (videoModel?.data?.video?.mainVideo != null) {
+          if (videoModel!.data!.video!.mainVideo!.isNotEmpty) {
+            videoUrl = videoModel!.data!.video!.mainVideo!;
+            emit(GetProductVideoDoneState());
+          }
+        } else {
+          emit(GetProductVideo404State());
+        }
+      }
+    }).catchError((err) {
+      print(err.toString());
+      emit(GetProductVideoErrorState());
+    });
   }
 }

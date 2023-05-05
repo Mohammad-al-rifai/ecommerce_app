@@ -1,5 +1,5 @@
 class Urls {
-  static const String baseUrl = 'http://192.168.172.232:3000';
+  static const String baseUrl = 'http://192.168.210.232:3000';
 
   static const String filesUrl = '$baseUrl/api/download?fileName=';
 
@@ -15,4 +15,5 @@ class Urls {
   static const String getAllMerchants = '/user/allUsers/getAllMerchants/';
   static const String getMerchantProducts = '/user/allUsers/MerchantProducts/';
   static const String getGalleryProduct = '/user/allUsers/GalleryProduct/';
+  static const String getVideoProduct = '/user/allUsers/getProduct/';
 }

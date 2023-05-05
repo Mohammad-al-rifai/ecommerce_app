@@ -1,5 +1,3 @@
-import 'package:ecommerce/app/functions.dart';
-import 'package:ecommerce/presentation/components/default_video_player.dart';
 import 'package:ecommerce/presentation/resources/assets_manager.dart';
 import 'package:ecommerce/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -38,30 +36,30 @@ class _VideoWidgetState extends State<VideoWidget> {
       children: [
         Center(
           child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
+              ? GestureDetector(
+                  onTap: () {
+                    setState(
+                      () {
+                        _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play();
+                      },
+                    );
+                  },
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  ),
                 )
               : Container(),
         ),
-        GestureDetector(
-          onTap: () {
-            setState(
-              () {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-              },
-            );
-          },
-          child: SizedBox(
-            child: Center(
-              child: LottieBuilder.asset(
-                JsonAssets.video,
-                height: AppSize.s60,
-                width: AppSize.s60,
-                fit: BoxFit.cover,
-              ),
+        SizedBox(
+          child: Center(
+            child: LottieBuilder.asset(
+              JsonAssets.video,
+              height: AppSize.s60,
+              width: AppSize.s60,
+              fit: BoxFit.cover,
             ),
           ),
         ),
